@@ -64,11 +64,13 @@ int32 ASSGameMode::GetWinningTeam() const
     {
         return 0;
     }
-    else if (TeamScores[1] > TeamScores[0])
+
+	if (TeamScores[1] > TeamScores[0])
     {
-        return 1;
+	    return 1;
     }
-    return -1; // Tie
+
+	return -1; // Tie
 }
 
 void ASSGameMode::OnRep_TeamScores()
