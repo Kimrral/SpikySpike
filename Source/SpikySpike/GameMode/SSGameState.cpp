@@ -22,6 +22,12 @@ void ASSGameState::BeginPlay()
     // Optionally spawn scoring volumes or set up other game elements here
 }
 
+void ASSGameState::PostInitializeComponents()
+{
+	Super::PostInitializeComponents();
+
+}
+
 void ASSGameState::HandleBallTouch(AActor* InActor)
 {
     if (InActor && InActor->ActorHasTag("Floor"))
@@ -34,12 +40,17 @@ void ASSGameState::IncrementScore(const int32 TeamIndex)
 {
     if (TeamIndex >= 0 && TeamIndex < TeamScores.Num())
     {
+        ScoredTeam = TeamIndex;
         TeamScores[TeamIndex]++;
-        OnRep_TeamScores();
+
+        if (GetNetMode() != NM_DedicatedServer)
+        {
+	        OnRep_TeamScores();
+        }
     }
 }
 
-int32 ASSGameState::GetTeamScore(int32 TeamIndex) const
+int32 ASSGameState::GetTeamScore(const int32 TeamIndex) const
 {
     if (TeamIndex >= 0 && TeamIndex < TeamScores.Num())
     {
@@ -67,7 +78,7 @@ int32 ASSGameState::GetWinningTeam() const
 void ASSGameState::OnRep_TeamScores()
 {
     // Handle score replication updates (optional, if you need specific behavior)
-    UE_LOG(LogTemp, Warning, TEXT("Team %d Scores, Total Score : %d"), 0, 1);
+    UE_LOG(LogTemp, Warning, TEXT("Team %d Scores, Total Score : %d"), ScoredTeam, GetTeamScore(ScoredTeam));
 }
 
 void ASSGameState::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const

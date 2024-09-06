@@ -17,10 +17,8 @@ class SPIKYSPIKE_API ASSPlayerState : public APlayerState
 public:
 	ASSPlayerState();
 
-	UFUNCTION()
 	FORCEINLINE int32 GetTeamID() const { return TeamID; }
 
-	UFUNCTION()
 	FORCEINLINE void SetTeamID(const int32 InTeamID) { TeamID = InTeamID; }
 
 private:

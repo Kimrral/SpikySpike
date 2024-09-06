@@ -20,6 +20,8 @@ public:
 protected:
 	virtual void BeginPlay() override;
 
+    virtual void PostInitializeComponents() override;
+
 public:
     // Function to handle ball touch
     UFUNCTION(BlueprintCallable, Category = "Score")
@@ -37,6 +39,9 @@ private:
     // Scores for each team
     UPROPERTY(ReplicatedUsing = OnRep_TeamScores)
     TArray<int32> TeamScores;
+
+    UPROPERTY(Replicated)
+    int32 ScoredTeam = -1;
 
     // Function to update the team scores
     UFUNCTION()

@@ -1,8 +1,6 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "SSVolleyBall.h"
-
-#include "SpikySpike/GameMode/SSGameMode.h"
 #include "SpikySpike/GameMode/SSGameState.h"
 
 // Sets default values
@@ -36,6 +34,14 @@ void ASSVolleyBall::Tick(float DeltaTime)
 
 void ASSVolleyBall::OnBallHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit)
 {
+	// Calculate reflection vector
+	const FVector IncomingVelocity = HitComponent->GetComponentVelocity();
+	const FVector Normal = Hit.Normal;
+	const FVector Reflection = FMath::GetReflectionVector(IncomingVelocity, Normal);
+
+    // Apply reflection force
+    HitComponent->AddImpulse(Reflection, NAME_None, true);
+
     HandleBallCollision(OtherActor);
 }
 
