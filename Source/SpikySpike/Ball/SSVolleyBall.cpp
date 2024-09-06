@@ -3,6 +3,7 @@
 #include "SSVolleyBall.h"
 
 #include "SpikySpike/GameMode/SSGameMode.h"
+#include "SpikySpike/GameMode/SSGameState.h"
 
 // Sets default values
 ASSVolleyBall::ASSVolleyBall()
@@ -38,24 +39,25 @@ void ASSVolleyBall::OnBallHit(UPrimitiveComponent* HitComponent, AActor* OtherAc
     HandleBallCollision(OtherActor);
 }
 
-void ASSVolleyBall::HandleBallCollision(AActor* OtherActor)
+void ASSVolleyBall::HandleBallCollision(AActor* OtherActor) const
 {
+    if (!HasAuthority())
+    {
+	    return;
+    }
+
     if (OtherActor)
     {
         // Check if the hit actor is a floor
         if (OtherActor->ActorHasTag("Floor"))
         {
             // Get the GameMode
-            AGameModeBase* GameMode = GetWorld()->GetAuthGameMode();
-            if (ASSGameMode* MyGameMode = Cast<ASSGameMode>(GameMode))
+            ASSGameState* SSGameState = Cast<ASSGameState>(GetWorld()->GetGameState());
+        	if (SSGameState)
             {
                 // Call GameMode to handle scoring
-                MyGameMode->HandleBallTouch(GetActorLocation());
+                SSGameState->HandleBallTouch(OtherActor);
             }
-        }
-        else if (OtherActor->ActorHasTag("Wall"))
-        {
-            // Optionally, handle wall bounce logic here if needed
         }
     }
 }

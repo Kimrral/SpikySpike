@@ -32,5 +32,5 @@ private:
 	TObjectPtr<UStaticMeshComponent> BallMesh;
 
 	// Function to handle scoring based on the ball collision
-    void HandleBallCollision(AActor* OtherActor);
+    void HandleBallCollision(AActor* OtherActor) const;
 };
