@@ -25,9 +25,11 @@ class ASSCharacter : public ACharacter
 	USpringArmComponent* CameraBoom;
 
 	/** Follow camera */
+	/*
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
 	UCameraComponent* FollowCamera;
-	
+	*/
+
 	/** MappingContext */
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 	UInputMappingContext* DefaultMappingContext;
@@ -62,7 +64,9 @@ public:
 	/** Returns CameraBoom subobject **/
 	FORCEINLINE class USpringArmComponent* GetCameraBoom() const { return CameraBoom; }
 	/** Returns FollowCamera subobject **/
+	/*
 	FORCEINLINE class UCameraComponent* GetFollowCamera() const { return FollowCamera; }
+	*/
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float JumpImpulse = 300.f;
