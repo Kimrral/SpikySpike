@@ -20,7 +20,7 @@ ASSCharacter::ASSCharacter()
 {
 	// Set size for collision capsule
 	GetCapsuleComponent()->InitCapsuleSize(42.f, 96.0f);
-		
+
 	// Don't rotate when the controller rotates. Let that just affect the camera.
 	bUseControllerRotationPitch = false;
 	bUseControllerRotationYaw = false;
@@ -64,7 +64,8 @@ void ASSCharacter::BeginPlay()
 	//Add Input Mapping Context
 	if (APlayerController* PlayerController = Cast<APlayerController>(Controller))
 	{
-		if (UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(PlayerController->GetLocalPlayer()))
+		if (UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<
+			UEnhancedInputLocalPlayerSubsystem>(PlayerController->GetLocalPlayer()))
 		{
 			Subsystem->AddMappingContext(DefaultMappingContext, 0);
 		}
@@ -74,20 +75,27 @@ void ASSCharacter::BeginPlay()
 //////////////////////////////////////////////////////////////////////////
 // Input
 
+
 void ASSCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	// Set up action bindings
-	if (UEnhancedInputComponent* EnhancedInputComponent = Cast<UEnhancedInputComponent>(PlayerInputComponent)) {
-		
+	if (UEnhancedInputComponent* EnhancedInputComponent = Cast<UEnhancedInputComponent>(PlayerInputComponent))
+	{
 		// Jumping
 		EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Triggered, this, &ASSCharacter::WaterJump);
 
 		// Moving
 		EnhancedInputComponent->BindAction(MoveAction, ETriggerEvent::Triggered, this, &ASSCharacter::Move);
+
+		// Spike
+		EnhancedInputComponent->BindAction(SpikeAction, ETriggerEvent::Triggered, this, &ASSCharacter::Spike);
 	}
 	else
 	{
-		UE_LOG(LogTemplateCharacter, Error, TEXT("'%s' Failed to find an Enhanced Input component! This template is built to use the Enhanced Input system. If you intend to use the legacy system, then you will need to update this C++ file."), *GetNameSafe(this));
+		UE_LOG(LogTemplateCharacter, Error,
+		       TEXT(
+			       "'%s' Failed to find an Enhanced Input component! This template is built to use the Enhanced Input system. If you intend to use the legacy system, then you will need to update this C++ file."
+		       ), *GetNameSafe(this));
 	}
 }
 
@@ -104,7 +112,7 @@ void ASSCharacter::Move(const FInputActionValue& Value)
 
 		// get forward vector
 		const FVector ForwardDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
-	
+
 		// get right vector 
 		const FVector RightDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
 
@@ -118,4 +126,29 @@ void ASSCharacter::WaterJump()
 {
 	// Apply an upward impulse to simulate jumping
 	LaunchCharacter(FVector(0, 0, JumpImpulse), false, true);
+}
+
+void ASSCharacter::Spike()
+{
+	SpikeServer();
+}
+
+void ASSCharacter::SpikeServer_Implementation()
+{
+	SpikeNetMulticast();
+}
+
+void ASSCharacter::SpikeNetMulticast_Implementation()
+{
+	if(!GetMesh()->GetAnimInstance()->IsAnyMontagePlaying())
+	{
+		// Play Spike Montage
+		PlayAnimMontage(SpikeMontage);
+	}	
+	
+	// if Local Client
+	if (!HasAuthority())
+	{
+		
+	}
 }

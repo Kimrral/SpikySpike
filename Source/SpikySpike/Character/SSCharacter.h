@@ -42,21 +42,34 @@ class ASSCharacter : public ACharacter
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 	UInputAction* MoveAction;
 
+	/** Spike Input Action */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
+	UInputAction* SpikeAction;
+
 public:
 	ASSCharacter();
-	
+
+	UPROPERTY(EditAnywhere)
+	UAnimMontage* SpikeMontage;
 
 protected:
-
 	/** Called for movement input */
 	void Move(const FInputActionValue& Value);
 
-	void WaterJump();			
+	void WaterJump();
+
+	void Spike();
+
+	UFUNCTION(Server, Reliable)
+	void SpikeServer();
+
+	UFUNCTION(NetMulticast, Unreliable)
+	void SpikeNetMulticast();
 
 protected:
 	// APawn interface
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
-	
+
 	// To add mapping context
 	virtual void BeginPlay();
 
@@ -71,4 +84,3 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float JumpImpulse = 300.f;
 };
-

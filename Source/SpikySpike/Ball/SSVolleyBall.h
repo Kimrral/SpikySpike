@@ -26,11 +26,11 @@ public:
     UFUNCTION()
     void OnBallHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit);
 
-private:
-    // The static mesh component for the ball
-    UPROPERTY(VisibleAnywhere)
+	// The static mesh component for the ball
+	UPROPERTY(VisibleAnywhere)
 	TObjectPtr<UStaticMeshComponent> BallMesh;
 
+private:
 	// Function to handle scoring based on the ball collision
     void HandleBallCollision(AActor* OtherActor) const;
 };
