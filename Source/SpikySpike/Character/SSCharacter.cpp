@@ -10,6 +10,7 @@
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
 #include "InputActionValue.h"
+#include "SpikySpike/GameMode/SSPlayerState.h"
 
 DEFINE_LOG_CATEGORY(LogTemplateCharacter);
 
@@ -70,11 +71,43 @@ void ASSCharacter::BeginPlay()
 			Subsystem->AddMappingContext(DefaultMappingContext, 0);
 		}
 	}
+
+	// 위치에 따른 PlayerState 팀 ID 설정
+	DetermineTeamByFloorTag();
 }
 
-//////////////////////////////////////////////////////////////////////////
-// Input
+void ASSCharacter::DetermineTeamByFloorTag() const
+{
+	FVector StartLocation = GetActorLocation();
+    FVector EndLocation = StartLocation - FVector(0.f, 0.f, 1000.f);
 
+    FHitResult HitResult;
+    FCollisionQueryParams TraceParams;
+    TraceParams.bTraceComplex = true;
+    TraceParams.AddIgnoredActor(this);
+
+    bool bHit = GetWorld()->LineTraceSingleByChannel(HitResult, StartLocation, EndLocation, ECC_Visibility, TraceParams);
+
+    if (bHit)
+    {
+        AActor* HitActor = HitResult.GetActor();
+        if (HitActor && HitActor->ActorHasTag(FName("Floor")))
+        {
+            ASSPlayerState* PS = Cast<ASSPlayerState>(GetPlayerState());
+            if (PS)
+            {
+                if (HitActor->ActorHasTag(FName("A")))
+                {
+                    PS->SetTeamID(0);  // A팀
+                }
+                else if (HitActor->ActorHasTag(FName("B")))
+                {
+                    PS->SetTeamID(1);  // B팀
+                }
+            }
+        }
+    }
+}
 
 void ASSCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {

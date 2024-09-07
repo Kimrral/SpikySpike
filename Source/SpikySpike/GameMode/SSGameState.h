@@ -31,6 +31,9 @@ public:
     UFUNCTION(BlueprintCallable, Category = "Score")
     int32 GetTeamScore(int32 TeamIndex) const;
 
+    UFUNCTION(BlueprintCallable, Category = "Score")
+    FORCEINLINE int32 GetScoredTeam() const { return ScoredTeam; };
+
     // Function to get the winning team
     UFUNCTION(BlueprintCallable, Category = "Score")
     int32 GetWinningTeam() const;

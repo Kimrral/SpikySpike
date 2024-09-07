@@ -69,16 +69,17 @@ protected:
 	UFUNCTION(Server, Unreliable)
 	void LaunchCharacterServer();
 
-protected:
+	void DetermineTeamByFloorTag() const;
+
 	// APawn interface
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 	// To add mapping context
-	virtual void BeginPlay();
+	virtual void BeginPlay() override;
 
 public:
 	/** Returns CameraBoom subobject **/
-	FORCEINLINE class USpringArmComponent* GetCameraBoom() const { return CameraBoom; }
+	FORCEINLINE USpringArmComponent* GetCameraBoom() const { return CameraBoom; }
 	/** Returns FollowCamera subobject **/
 	/*
 	FORCEINLINE class UCameraComponent* GetFollowCamera() const { return FollowCamera; }
