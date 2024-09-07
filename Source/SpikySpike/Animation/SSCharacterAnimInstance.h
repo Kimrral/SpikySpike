@@ -31,6 +31,8 @@ public:
 	float SpikeForce = 5000.f;
 
 	void SpikeBall(const ASSVolleyBall* VolleyBall) const;
+	void SpikeBall2(const ASSVolleyBall* VolleyBall) const;
 	
-	
+protected:
+	bool IsPlayerFacingRight() const;
 };
