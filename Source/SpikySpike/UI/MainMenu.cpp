@@ -20,6 +20,8 @@ void UMainMenu::NativeConstruct()
 	Btn_QuitGame->OnPressed.AddDynamic(this, &UMainMenu::QuitGame);
 	Btn_QuitYes->OnPressed.AddDynamic(this, &UMainMenu::QuitYes);
 	Btn_QuitNo->OnPressed.AddDynamic(this, &UMainMenu::QuitNo);
+
+	PlayAnimation(MainMenuAppearAnimation);
 }
 
 void UMainMenu::StartGame()

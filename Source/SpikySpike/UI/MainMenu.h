@@ -36,6 +36,10 @@ public:
 	UPROPERTY()
 	class APlayerController* Controller;
 
+	// Appear Animation
+	UPROPERTY(BlueprintReadWrite, Transient, meta = (BindWidgetAnim))
+	class UWidgetAnimation* MainMenuAppearAnimation;	
+
 	UFUNCTION()
 	void StartGame();
 
