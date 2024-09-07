@@ -125,7 +125,8 @@ void ASSCharacter::Move(const FInputActionValue& Value)
 void ASSCharacter::WaterJump()
 {
 	// Apply an upward impulse to simulate jumping
-	LaunchCharacter(FVector(0, 0, JumpImpulse), false, true);
+	// 멀티에서는 서버에서 LaunchCharacter() 를 호출해 줘야 한다.
+	LaunchCharacterServer();
 }
 
 void ASSCharacter::Spike()
@@ -151,4 +152,9 @@ void ASSCharacter::SpikeNetMulticast_Implementation()
 	{
 		
 	}
+}
+
+void ASSCharacter::LaunchCharacterServer_Implementation()
+{
+	LaunchCharacter(FVector(0, 0, JumpImpulse), false, true);
 }

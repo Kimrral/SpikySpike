@@ -66,6 +66,9 @@ protected:
 	UFUNCTION(NetMulticast, Unreliable)
 	void SpikeNetMulticast();
 
+	UFUNCTION(Server, Unreliable)
+	void LaunchCharacterServer();
+
 protected:
 	// APawn interface
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
