@@ -7,6 +7,7 @@
 #include "Components/TextBlock.h"
 #include "SpikySpike/Player/SSPlayerController.h"
 #include "SpikySpike/UI/ScoreBoard.h"
+#include "SpikySpike/UI/StageResult.h"
 
 void ASSPlayerState::OnRep_TeamScores() const
 {
@@ -15,12 +16,20 @@ void ASSPlayerState::OnRep_TeamScores() const
 
 void ASSPlayerState::OnRep_RoundWinTeam() const
 {
-	if (const ASSPlayerController* PC = Cast<ASSPlayerController>(GetOwner()); PC && PC->IsLocalController())
+	if (ASSPlayerController* PC = Cast<ASSPlayerController>(GetOwner()); PC && PC->IsLocalController())
 	{
 		if (const ASSGameState* SSGameState = PC->GetWorld()->GetGameState<ASSGameState>())
 		{
-			const int32 RoundWinTeam = SSGameState->GetRoundWinTeam();
-			// ¿©±â¿¡ ¶ó¿îµå ³¡³µÀ» ¶§ ·ÎÁ÷ Ãß°¡ÇÏ½Ã¸é µË´Ï´Ù.
+			UE_LOG(LogTemp, Warning, TEXT("Result"))
+			// ï¿½ï¿½ï¿½â¿¡ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½ï¿½Ï½Ã¸ï¿½ ï¿½Ë´Ï´ï¿½.
+			if (const int32 RoundWinTeam = SSGameState->GetRoundWinTeam(); RoundWinTeam == 1)
+			{
+				PC->StageResultOnViewport(0);
+			}
+			else
+			{
+				PC->StageResultOnViewport(1);
+			}
 		}
 	}
 }
@@ -33,8 +42,7 @@ void ASSPlayerState::UpdateScoreUI() const
 		{
 			if (IsValid(PC->ScoreBoard))
 			{
-				const int32 ScoredTeam = SSGameState->GetScoredTeam();
-				if (ScoredTeam == 1)
+				if (const int32 ScoredTeam = SSGameState->GetScoredTeam(); ScoredTeam == 1)
 				{
 					PC->ScoreBoard->FirstTeamScoreNumber++;
 					PC->ScoreBoard->FirstTeamScore->SetText(FText::AsNumber(PC->ScoreBoard->FirstTeamScoreNumber));

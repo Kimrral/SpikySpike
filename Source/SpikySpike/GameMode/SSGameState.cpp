@@ -69,7 +69,7 @@ void ASSGameState::IncrementScore(const int32 TeamIndex)
 	        if (GetTeamScore(ScoredTeam) == SSGameMode->GetGoalScore())
 	        {
                 RoundWinTeam = ScoredTeam;
-		        SSGameMode->EndRound();
+		        SSGameMode->EndRound(); // 이 함수에서 게임 끝났을 때 처리 해야함
 	        }
             else
             {
@@ -140,5 +140,6 @@ void ASSGameState::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLife
 
     DOREPLIFETIME(ASSGameState, TeamScores);
     DOREPLIFETIME(ASSGameState, ScoredTeam);
+	DOREPLIFETIME(ASSGameState, RoundWinTeam);
     DOREPLIFETIME(ASSGameState, GameStartTime);
 }

@@ -16,5 +16,20 @@ class SPIKYSPIKE_API UStageResult : public UUserWidget
 
 public:
 	virtual void NativeConstruct() override;
+
+	UFUNCTION()
+	void FirstTeamWin() ;
+
+	UFUNCTION()
+	void SecondTeamWin() ;
+
+	UFUNCTION()
+	void ReturnToLobby();
+
+	UPROPERTY(VisibleAnywhere, meta = (BindWidget))
+	class UButton* Btn_ReturnLobby;
+
+	UPROPERTY(VisibleAnywhere, meta = (BindWidget))
+	class UWidgetSwitcher* WidgetSwitcher_StageResult;
 	
 };

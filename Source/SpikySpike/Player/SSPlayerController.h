@@ -20,11 +20,20 @@ public:
 	UFUNCTION()
 	void ScoreBoardOnViewport();
 
+	UFUNCTION()
+	void StageResultOnViewport(const int32 WinnerNumber);
+	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="UI")
 	TSubclassOf<UUserWidget> ScoreBoardWidget;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="UI")
+	TSubclassOf<UUserWidget> StageResultWidget;
+
 	UPROPERTY()
 	class UScoreBoard* ScoreBoard;
+	
+	UPROPERTY()
+	class UStageResult* StageResult;
 	
 	UPROPERTY(EditDefaultsOnly, Category="Camera")
 	class UClass* CameraActorClass;
