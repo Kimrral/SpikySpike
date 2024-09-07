@@ -32,6 +32,9 @@ public:
 
 	void SpikeBall(const ASSVolleyBall* VolleyBall) const;
 	void SpikeBall2(const ASSVolleyBall* VolleyBall) const;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	class UParticleSystem* SpikeParticle;
 	
 protected:
 	bool IsPlayerFacingRight() const;

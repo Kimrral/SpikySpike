@@ -3,6 +3,7 @@
 
 #include "SpikySpike/Animation/SSCharacterAnimInstance.h"
 
+#include "Kismet/GameplayStatics.h"
 #include "SpikySpike/Ball/SSVolleyBall.h"
 #include "SpikySpike/Character/SSCharacter.h"
 
@@ -33,13 +34,11 @@ void USSCharacterAnimInstance::AnimNotify_SpikeHitPoint()
 			{
 				//SpikeBall(VolleyBall);
 				SpikeBall2(VolleyBall);
-				UE_LOG(LogTemp, Warning, TEXT("Spike Casting Succeess"))
+				UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), SpikeParticle,
+				                                         AnimOwner->GetMesh()->GetBoneLocation(
+					                                         FName("SpikeParticleSocket")));
 			}
 		}
-	}
-	else
-	{
-		UE_LOG(LogTemp, Warning, TEXT("Spike Casting false"))
 	}
 }
 
@@ -56,11 +55,15 @@ void USSCharacterAnimInstance::SpikeBall(const ASSVolleyBall* VolleyBall) const
 void USSCharacterAnimInstance::SpikeBall2(const ASSVolleyBall* VolleyBall) const
 {
 	// 플레이어가 왼쪽/오른쪽을 보고 있는지에 따라 스파이크 방향이 결정
-	const FVector DiagonalForceDirection = (IsPlayerFacingRight() ? FVector(0.f, 1.0f, -1.0f) : FVector(0.f, -1.0f, -1.0f)).GetSafeNormal();
+	const FVector DiagonalForceDirection = (IsPlayerFacingRight()
+		                                        ? FVector(0.f, 1.0f, -1.0f)
+		                                        : FVector(0.f, -1.0f, -1.0f)).GetSafeNormal();
 
 	// 일단은 SpiekForce 대신 하드 코딩 상수를 사용
 	VolleyBall->BallMesh->AddForce(DiagonalForceDirection * 100'0000.F);
-	DrawDebugDirectionalArrow(GetWorld(), AnimOwner->GetActorLocation(), AnimOwner->GetActorLocation() + DiagonalForceDirection * 100, 2, FColor::Green, false, 3.0f, 0, 2.f);
+	DrawDebugDirectionalArrow(GetWorld(), AnimOwner->GetActorLocation(),
+	                          AnimOwner->GetActorLocation() + DiagonalForceDirection * 100, 2, FColor::Green, false,
+	                          3.0f, 0, 2.f);
 }
 
 // 내적을 활용해 플레이어가 왼쪽/오른쪽을 보고 있는지 반환
@@ -71,7 +74,8 @@ bool USSCharacterAnimInstance::IsPlayerFacingRight() const
 		return false;
 	}
 
-	const FVector CharacterForwardVector = FVector::VectorPlaneProject(AnimOwner->GetActorForwardVector(), FVector::UpVector);
+	const FVector CharacterForwardVector = FVector::VectorPlaneProject(AnimOwner->GetActorForwardVector(),
+	                                                                   FVector::UpVector);
 	const float Dot = FVector::DotProduct(CharacterForwardVector, FVector::RightVector);
 
 	return (0.f < Dot);
