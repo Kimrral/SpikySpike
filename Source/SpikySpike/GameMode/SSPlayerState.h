@@ -21,8 +21,9 @@ public:
 
 	FORCEINLINE void SetTeamID(const int32 InTeamID) { TeamID = InTeamID; }
 
-	UFUNCTION()
 	void OnRep_TeamScores();
+
+	void UpdateScoreUI();
 
 private:
 	// Team ID for this player
