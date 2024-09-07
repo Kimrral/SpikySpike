@@ -71,10 +71,6 @@ void ASSGameMode::BeginPlay()
 {
     Super::BeginPlay();
 
-	if (VolleyBallClass)
-	{
-		SSVolleyBall = GetWorld()->SpawnActor<ASSVolleyBall>(VolleyBallClass, BallSpawnLocation, FRotator::ZeroRotator);
-	}
 }
 
 void ASSGameMode::PostLogin(APlayerController* NewPlayer)
@@ -86,6 +82,11 @@ void ASSGameMode::PostLogin(APlayerController* NewPlayer)
 		if (RoundTimeSeconds > 0)
 		{
 			GetWorldTimerManager().SetTimer(RoundTimerHandle, this, &ASSGameMode::EndMatch, RoundTimeSeconds, false);
+		}
+
+		if (VolleyBallClass)
+		{
+			SSVolleyBall = GetWorld()->SpawnActor<ASSVolleyBall>(VolleyBallClass, FVector::ZeroVector, FRotator::ZeroRotator);
 		}
 
 		StartRound();
