@@ -70,6 +70,11 @@ void ASSCharacter::BeginPlay()
 			Subsystem->AddMappingContext(DefaultMappingContext, 0);
 		}
 	}
+
+	if(IsLocallyControlled())
+	{
+		GetMesh()->SetRenderCustomDepth(true);
+	}
 }
 
 void ASSCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)

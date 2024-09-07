@@ -19,7 +19,9 @@ public:
 
 	void OnRep_RoundWinTeam() const;
 
-	void OnRep_RoundEnd() const;
+	void OnRep_RoundEnd();
 
 	void UpdateScoreUI() const;
+
+	void ProcessCameraFade() const;
 };

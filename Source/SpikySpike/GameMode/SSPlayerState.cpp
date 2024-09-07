@@ -4,6 +4,7 @@
 #include "SSPlayerState.h"
 #include "SSGameState.h"
 #include "Components/TextBlock.h"
+#include "Kismet/GameplayStatics.h"
 #include "SpikySpike/Player/SSPlayerController.h"
 #include "SpikySpike/UI/ScoreBoard.h"
 
@@ -31,11 +32,11 @@ void ASSPlayerState::OnRep_RoundWinTeam() const
 	}
 }
 
-void ASSPlayerState::OnRep_RoundEnd() const
+void ASSPlayerState::OnRep_RoundEnd()
 {
-	if (ASSPlayerController* PC = Cast<ASSPlayerController>(GetOwner()); PC && PC->IsLocalController())
+	if (const ASSPlayerController* PC = Cast<ASSPlayerController>(GetOwner()); PC && PC->IsLocalController())
 	{
-		// 라운드 종료시 페이드 인 / 페이드 아웃 로직
+		ProcessCameraFade();
 	}
 }
 
@@ -59,5 +60,26 @@ void ASSPlayerState::UpdateScoreUI() const
 				}
 			}
 		}
+	}
+}
+
+void ASSPlayerState::ProcessCameraFade() const
+{
+	// 라운드 종료시 페이드 인 / 페이드 아웃 로직
+	if (APlayerCameraManager* const CameraManager = Cast<APlayerCameraManager>(
+		UGameplayStatics::GetPlayerCameraManager(GetWorld(), 0)))
+	{
+		CameraManager->StopCameraFade();
+		CameraManager->StartCameraFade(0, 1, 2.f, FColor::Black, false, false);
+
+		FTimerHandle TimerHandle;
+		FTimerDelegate TimerDelegate;
+		TimerDelegate.BindLambda([&]()
+		{
+			CameraManager->StopCameraFade();
+			CameraManager->StartCameraFade(1.0, 0, 2.f, FColor::Black, false, false);
+		});
+
+		GetWorldTimerManager().SetTimer(TimerHandle, TimerDelegate, 2.f, false);
 	}
 }
