@@ -40,7 +40,8 @@ void ASSVolleyBall::OnBallHit(UPrimitiveComponent* HitComponent, AActor* OtherAc
 	const FVector Reflection = FMath::GetReflectionVector(IncomingVelocity, Normal);
 
     // Apply reflection force
-    HitComponent->AddImpulse(Reflection, NAME_None, true);
+    /* Physical Material (PM_Bounce) 를 이용해 탄성으로 공이 튀도록 수정
+    HitComponent->AddImpulse(Reflection, NAME_None, true);*/
 
     HandleBallCollision(OtherActor);
 }
