@@ -16,7 +16,8 @@ void ASSPlayerController::BeginPlay()
 
 	if (APlayerCameraManager* const CameraManager = Cast<APlayerCameraManager>(UGameplayStatics::GetPlayerCameraManager(GetWorld(), 0)))
 	{
-		CameraManager->StartCameraFade(1, 0, 2.0, FColor::Black, false, false);
+		CameraManager->StopCameraFade();
+		CameraManager->StartCameraFade(1.0, 0, 20.0, FColor::Black, false, false);
 	}
 }
 

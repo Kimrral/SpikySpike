@@ -29,7 +29,8 @@ void UMainMenu::StartGame()
 {
 	if (APlayerCameraManager* const CameraManager = Cast<APlayerCameraManager>(UGameplayStatics::GetPlayerCameraManager(GetWorld(), 0)))
 	{
-		CameraManager->StartCameraFade(0, 1, 2.0, FColor::Black, false, false);
+		CameraManager->StartCameraFade(0, 1, 1.5, FColor::Black, false, false);
+		PlayAnimation(MainMenuDisappearAnimation);
 	}
 
 	OpenDedicatedServer();

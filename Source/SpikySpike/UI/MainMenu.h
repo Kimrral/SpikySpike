@@ -38,7 +38,10 @@ public:
 
 	// Appear Animation
 	UPROPERTY(BlueprintReadWrite, Transient, meta = (BindWidgetAnim))
-	class UWidgetAnimation* MainMenuAppearAnimation;	
+	class UWidgetAnimation* MainMenuAppearAnimation;
+
+	UPROPERTY(BlueprintReadWrite, Transient, meta = (BindWidgetAnim))
+	class UWidgetAnimation* MainMenuDisappearAnimation;
 
 	UFUNCTION(BlueprintImplementableEvent)
 	void OpenDedicatedServer();
