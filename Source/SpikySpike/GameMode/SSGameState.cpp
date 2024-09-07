@@ -16,6 +16,8 @@ ASSGameState::ASSGameState()
     ScoredTeam = -1;
     RoundWinTeam = -1;
     GameStartTime = 0.f;
+    bEnableIncreaseScore = true;
+    RoundRestartTime = 3.f;
 
     // Ensure the game mode replicates
     bReplicates = true;
@@ -36,7 +38,7 @@ void ASSGameState::PostInitializeComponents()
 
 void ASSGameState::HandleBallTouch(AActor* InActor)
 {
-    if (InActor && InActor->ActorHasTag("Floor"))
+    if (InActor && InActor->ActorHasTag("Floor") && bEnableIncreaseScore)
     {
 	    IncrementScore(InActor->ActorHasTag("A") ? 0 : 1);
     }
@@ -71,7 +73,8 @@ void ASSGameState::IncrementScore(const int32 TeamIndex)
 	        }
             else
             {
-	            SSGameMode->StartRound();
+                GetWorldTimerManager().SetTimer(RoundRestartTimerHandle, SSGameMode, &ASSGameMode::StartRound, RoundRestartTime, false);
+	            bEnableIncreaseScore = false;
             }
         }
     }

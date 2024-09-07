@@ -25,12 +25,14 @@ void ASSGameMode::StartRound()
 	UE_LOG(LogTemp, Warning, TEXT("Restarting The Game"));
 
 	// 플레이어 트랜스폼 및 움직임 초기화
+	int32 CurIndex = 0;
 	for (const auto PlayerState : GameState->PlayerArray)
 	{
 		APlayerController* PlayerController = PlayerState->GetPlayerController();
 		if (PlayerController && PlayerController->GetPawn())
 		{
-			const AActor* PlayerStart = FindPlayerStart(PlayerController);
+			const FString PlayerStartTag = FString::Printf(TEXT("PlayerStart%d"), CurIndex);
+			const AActor* PlayerStart = FindPlayerStart(PlayerController, PlayerStartTag);
 			if (PlayerStart)
 			{
 				APawn* Pawn = PlayerController->GetPawn();
@@ -42,6 +44,8 @@ void ASSGameMode::StartRound()
 
 			ASSPlayerController* SSPlayerController = Cast<ASSPlayerController>(PlayerController);
 			SSPlayerController->SetViewTargetClient();
+
+			++CurIndex;
 		}
 	}
 
@@ -66,6 +70,12 @@ void ASSGameMode::StartRound()
 	        SSVolleyBall->BallMesh->SetPhysicsAngularVelocityInDegrees(FVector::ZeroVector);  // 회전 초기화
 			SSVolleyBall->BallMesh->SetSimulatePhysics(true);
 		}
+	}
+
+	ASSGameState* SSGameState = GetGameState<ASSGameState>();
+	if (SSGameState)
+	{
+		SSGameState->bEnableIncreaseScore = true;
 	}
 }
 

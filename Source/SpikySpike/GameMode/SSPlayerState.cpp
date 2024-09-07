@@ -33,12 +33,13 @@ void ASSPlayerState::UpdateScoreUI() const
 		{
 			if (IsValid(PC->ScoreBoard))
 			{
-				if (const int32 ScoredTeam = SSGameState->GetScoredTeam(); ScoredTeam == 0)
+				const int32 ScoredTeam = SSGameState->GetScoredTeam();
+				if (ScoredTeam == 1)
 				{
 					PC->ScoreBoard->FirstTeamScoreNumber++;
 					PC->ScoreBoard->FirstTeamScore->SetText(FText::AsNumber(PC->ScoreBoard->FirstTeamScoreNumber));
 				}
-				else
+				else if (ScoredTeam == 0)
 				{
 					PC->ScoreBoard->SecondTeamScoreNumber++;
 					PC->ScoreBoard->SecondTeamScore->SetText(FText::AsNumber(PC->ScoreBoard->SecondTeamScoreNumber));

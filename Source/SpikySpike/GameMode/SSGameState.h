@@ -46,6 +46,12 @@ public:
     UFUNCTION(BlueprintCallable, Category = "Score")
     int32 GetWinningTeam() const;
 
+    FTimerHandle RoundRestartTimerHandle;
+    bool bEnableIncreaseScore;
+
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "GameRule")
+    float RoundRestartTime;
+
 private:
     // Scores for each team
     UPROPERTY(ReplicatedUsing = OnRep_TeamScores)
