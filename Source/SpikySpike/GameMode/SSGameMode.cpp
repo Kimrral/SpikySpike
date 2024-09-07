@@ -69,19 +69,18 @@ void ASSGameMode::StartRound()
 	}
 }
 
-void ASSGameMode::EndMatch()
+void ASSGameMode::EndRound() const
 {
-	UE_LOG(LogTemp, Warning, TEXT("Ending The Game"));
-
-	ASSGameState* SSGameState = GetGameState<ASSGameState>();
-	if (SSGameState)
+	if (!GetWorldTimerManager().IsTimerActive(RoundTimerHandle))
 	{
-		const int32 WinningTeam = SSGameState->GetWinningTeam();
+		ASSGameState* SSGameState = GetGameState<ASSGameState>();
+		if (SSGameState)
+		{
+			SSGameState->SetWinningTeamWhenRoundTimerEnd();
+		}
 	}
 
 	SSVolleyBall->Destroy(true);
-
-	Super::EndMatch();
 }
 
 void ASSGameMode::BeginPlay()
@@ -112,7 +111,7 @@ void ASSGameMode::PostLogin(APlayerController* NewPlayer)
 
 		if (RoundTimeSeconds > 0)
 		{
-			GetWorldTimerManager().SetTimer(RoundTimerHandle, this, &ASSGameMode::EndMatch, RoundTimeSeconds, false);
+			GetWorldTimerManager().SetTimer(RoundTimerHandle, this, &ASSGameMode::EndRound, RoundTimeSeconds, false);
 		}
 
 		GetWorldTimerManager().SetTimer(StartTimerHandle, this, &ASSGameMode::StartRound, 2.0f, false);

@@ -37,6 +37,11 @@ public:
     UFUNCTION(BlueprintCallable, Category = "Score")
     FORCEINLINE int32 GetScoredTeam() const { return ScoredTeam; };
 
+	UFUNCTION(BlueprintCallable, Category = "Score")
+    FORCEINLINE int32 GetRoundWinTeam() const { return RoundWinTeam; };
+
+    void SetWinningTeamWhenRoundTimerEnd();
+
     // Function to get the winning team
     UFUNCTION(BlueprintCallable, Category = "Score")
     int32 GetWinningTeam() const;
@@ -49,9 +54,15 @@ private:
     UPROPERTY(Replicated)
     int32 ScoredTeam;
 
+    UPROPERTY(ReplicatedUsing = OnRep_RoundWinTeam)
+    int32 RoundWinTeam;
+
     // Function to update the team scores
     UFUNCTION()
     void OnRep_TeamScores();
+
+    UFUNCTION()
+    void OnRep_RoundWinTeam();
 
     // Function to increment the score for a specific team
     void IncrementScore(int32 TeamIndex);

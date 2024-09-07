@@ -17,5 +17,7 @@ class SPIKYSPIKE_API ASSPlayerState : public APlayerState
 public:
 	void OnRep_TeamScores() const;
 
+	void OnRep_RoundWinTeam() const;
+
 	void UpdateScoreUI() const;
 };

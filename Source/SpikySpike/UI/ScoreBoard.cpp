@@ -41,7 +41,7 @@ void UScoreBoard::SetCountdownTimer(float InDeltaTime)
 
 	// GameState에서 StartTime을 가져옴
     ASSGameState* SSGameState = GetWorld()->GetGameState<ASSGameState>();
-    if (!SSGameState) 
+    if (!SSGameState || SSGameState->GameStartTime == 0.f) 
     {
     	return;
 	}

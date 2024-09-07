@@ -20,8 +20,7 @@ public:
     FORCEINLINE int32 GetGoalScore() const { return GoalScore; }
 
     void StartRound();
-
-    virtual void EndMatch() override;
+    void EndRound() const;
 
     UPROPERTY(EditAnywhere, NoClear, BlueprintReadOnly, Category=Classes)
 	TSubclassOf<ASSVolleyBall> VolleyBallClass;

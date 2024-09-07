@@ -14,6 +14,7 @@ ASSGameState::ASSGameState()
     TeamScores[1] = 0; // Team 1
 
     ScoredTeam = -1;
+    RoundWinTeam = -1;
     GameStartTime = 0.f;
 
     // Ensure the game mode replicates
@@ -65,7 +66,8 @@ void ASSGameState::IncrementScore(const int32 TeamIndex)
         {
 	        if (GetTeamScore(ScoredTeam) == SSGameMode->GetGoalScore())
 	        {
-		        SSGameMode->EndMatch();
+                RoundWinTeam = ScoredTeam;
+		        SSGameMode->EndRound();
 	        }
             else
             {
@@ -83,6 +85,11 @@ int32 ASSGameState::GetTeamScore(const int32 TeamIndex) const
     }
 
     return 0;
+}
+
+void ASSGameState::SetWinningTeamWhenRoundTimerEnd()
+{
+    RoundWinTeam = GetWinningTeam();
 }
 
 int32 ASSGameState::GetWinningTeam() const
@@ -110,6 +117,18 @@ void ASSGameState::OnRep_TeamScores()
 		    SSPlayerState->OnRep_TeamScores();
 	    }
     }
+}
+
+void ASSGameState::OnRep_RoundWinTeam()
+{
+	for (auto PlayerState : PlayerArray)
+	{
+	    ASSPlayerState* SSPlayerState = Cast<ASSPlayerState>(PlayerState);
+        if (SSPlayerState)
+	    {
+	        SSPlayerState->OnRep_RoundWinTeam();
+	    }
+	}
 }
 
 void ASSGameState::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
