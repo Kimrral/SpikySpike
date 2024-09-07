@@ -25,6 +25,12 @@ public:
 	class UButton* Btn_QuitGame;
 
 	UPROPERTY(VisibleAnywhere, meta = (BindWidget))
+	class UButton* Btn_QuitYes;
+
+	UPROPERTY(VisibleAnywhere, meta = (BindWidget))
+	class UButton* Btn_QuitNo;
+
+	UPROPERTY(VisibleAnywhere, meta = (BindWidget))
 	class UWidgetSwitcher* WidgetSwitcher_MainMenu;
 
 	UPROPERTY()
@@ -37,9 +43,9 @@ public:
 	void QuitGame();
 
 	UFUNCTION()
-	void QuitYes() const;
+	void QuitYes();
 
 	UFUNCTION()
-	void QuitNo() const;
+	void QuitNo();
 	
 };

@@ -3,6 +3,7 @@
 
 #include "SpikySpike/UI/MainMenu.h"
 
+#include "Blueprint/WidgetBlueprintLibrary.h"
 #include "Components/Button.h"
 #include "Components/WidgetSwitcher.h"
 #include "Kismet/KismetSystemLibrary.h"
@@ -16,12 +17,19 @@ void UMainMenu::NativeConstruct()
 	WidgetSwitcher_MainMenu->SetActiveWidgetIndex(0);
 
 	Btn_GameStart->OnPressed.AddDynamic(this, &UMainMenu::StartGame);
-	Btn_GameStart->OnPressed.AddDynamic(this, &UMainMenu::QuitGame);
+	Btn_QuitGame->OnPressed.AddDynamic(this, &UMainMenu::QuitGame);
+	Btn_QuitYes->OnPressed.AddDynamic(this, &UMainMenu::QuitYes);
+	Btn_QuitNo->OnPressed.AddDynamic(this, &UMainMenu::QuitNo);
 }
 
 void UMainMenu::StartGame()
 {
-
+	if(IsValid(Controller))
+	{
+		UWidgetBlueprintLibrary::SetInputMode_GameOnly(Controller);  
+		Controller->SetShowMouseCursor(false);
+		this->RemoveFromParent();
+	}	
 }
 
 void UMainMenu::QuitGame()
@@ -30,7 +38,7 @@ void UMainMenu::QuitGame()
 	WidgetSwitcher_MainMenu->SetActiveWidgetIndex(1);
 }
 
-void UMainMenu::QuitYes() const
+void UMainMenu::QuitYes() 
 {
 	if(IsValid(Controller))
 	{
@@ -39,7 +47,7 @@ void UMainMenu::QuitYes() const
 	}	
 }
 
-void UMainMenu::QuitNo() const
+void UMainMenu::QuitNo() 
 {
 	if(IsValid(Controller))
 	{

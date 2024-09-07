@@ -13,5 +13,11 @@ UCLASS()
 class SPIKYSPIKE_API ASSPlayerController : public APlayerController
 {
 	GENERATED_BODY()
+
+public:
+	virtual void BeginPlay() override;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="UI")
+	TSubclassOf<UUserWidget> MainMenuWidget;
 	
 };
