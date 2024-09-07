@@ -23,6 +23,8 @@ public:
 
     virtual void EndMatch() override;
 
+	virtual AActor* ChoosePlayerStart_Implementation(AController* Player) override;
+
     UPROPERTY(EditAnywhere, NoClear, BlueprintReadOnly, Category=Classes)
 	TSubclassOf<ASSVolleyBall> VolleyBallClass;
 
@@ -32,6 +34,8 @@ protected:
     virtual void BeginPlay() override;
 
     virtual void StartMatch() override;
+
+    virtual void PostLogin(APlayerController* NewPlayer) override;
 
 private:
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "GameRules", meta = (AllowPrivateAccess = true))
@@ -46,5 +50,3 @@ private:
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "GameRules", meta = (AllowPrivateAccess = true))
     TWeakObjectPtr<ASSVolleyBall> SSVolleyBall;
 };
-
-

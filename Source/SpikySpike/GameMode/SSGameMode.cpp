@@ -55,6 +55,12 @@ void ASSGameMode::EndMatch()
 {
 	UE_LOG(LogTemp, Warning, TEXT("Ending The Game"));
 
+	ASSGameState* SSGameState = GetGameState<ASSGameState>();
+	if (SSGameState)
+	{
+		const int32 WinningTeam = SSGameState->GetWinningTeam();
+	}
+
 	SSVolleyBall->Destroy(true);
 
 	Super::EndMatch();
@@ -78,4 +84,35 @@ void ASSGameMode::StartMatch()
 	{
 		GetWorldTimerManager().SetTimer(RoundTimerHandle, this, &ASSGameMode::EndMatch, RoundTimeSeconds, false);
 	}
+}
+
+void ASSGameMode::PostLogin(APlayerController* NewPlayer)
+{
+	Super::PostLogin(NewPlayer);
+
+	ASSPlayerState* SSPlayerState = Cast<ASSPlayerState>(NewPlayer->PlayerState);
+	if (SSPlayerState)
+	{
+		SSPlayerState->SetTeamID(NumPlayers % 2);
+	}
+}
+
+AActor* ASSGameMode::ChoosePlayerStart_Implementation(AController* Player)
+{
+	AActor* ReturnActor = Super::ChoosePlayerStart_Implementation(Player);
+
+	ASSPlayerState* SSPlayerState = Cast<ASSPlayerState>(Player->PlayerState);
+	if (!Player->IsLocalPlayerController() || !SSPlayerState)
+	{
+		return ReturnActor;
+	}
+
+	const int32 TeamID = SSPlayerState->GetTeamID();
+	if (TeamID == -1)
+	{
+		return ReturnActor;
+	}
+
+	const FString TeamTag = FString::Printf(TEXT("Team%d"), TeamID);
+	return FindPlayerStart(Player, TeamTag);
 }
