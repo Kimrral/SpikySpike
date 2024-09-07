@@ -5,6 +5,7 @@
 
 #include "Components/Button.h"
 #include "Components/WidgetSwitcher.h"
+#include "Kismet/GameplayStatics.h"
 #include "Kismet/KismetSystemLibrary.h"
 #include "SpikySpike/Player/SSPlayerController.h"
 
@@ -26,12 +27,12 @@ void UMainMenu::NativeConstruct()
 
 void UMainMenu::StartGame()
 {
-	if(IsValid(Controller))
-	{		
-		this->RemoveFromParent();
+	if (APlayerCameraManager* const CameraManager = Cast<APlayerCameraManager>(UGameplayStatics::GetPlayerCameraManager(GetWorld(), 0)))
+	{
+		CameraManager->StartCameraFade(0, 1, 2.0, FColor::Black, false, false);
+	}
 
-		Controller->ScoreBoardOnViewport();
-	}	
+	OpenDedicatedServer();
 }
 
 void UMainMenu::QuitGame()
@@ -40,19 +41,16 @@ void UMainMenu::QuitGame()
 	WidgetSwitcher_MainMenu->SetActiveWidgetIndex(1);
 }
 
-void UMainMenu::QuitYes() 
+void UMainMenu::QuitYes()
 {
-	if(IsValid(Controller))
+	if (IsValid(Controller))
 	{
 		const TEnumAsByte<EQuitPreference::Type> Types = EQuitPreference::Quit;
 		UKismetSystemLibrary::QuitGame(GetWorld(), Controller, Types, false);
-	}	
+	}
 }
 
-void UMainMenu::QuitNo() 
+void UMainMenu::QuitNo()
 {
-	if(IsValid(Controller))
-	{
-		WidgetSwitcher_MainMenu->SetActiveWidgetIndex(0);
-	}	
+	WidgetSwitcher_MainMenu->SetActiveWidgetIndex(0);
 }

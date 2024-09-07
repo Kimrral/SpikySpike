@@ -40,8 +40,11 @@ public:
 	UPROPERTY(BlueprintReadWrite, Transient, meta = (BindWidgetAnim))
 	class UWidgetAnimation* MainMenuAppearAnimation;	
 
+	UFUNCTION(BlueprintImplementableEvent)
+	void OpenDedicatedServer();
+	
 	UFUNCTION()
-	void StartGame();
+	void StartGame();	
 
 	UFUNCTION()
 	void QuitGame();

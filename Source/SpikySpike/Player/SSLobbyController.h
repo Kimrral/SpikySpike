@@ -4,26 +4,20 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/PlayerController.h"
-#include "SSPlayerController.generated.h"
+#include "SSLobbyController.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class SPIKYSPIKE_API ASSPlayerController : public APlayerController
+class SPIKYSPIKE_API ASSLobbyController : public APlayerController
 {
 	GENERATED_BODY()
 
 public:
 	virtual void BeginPlay() override;
 
-	UFUNCTION()
-	void ScoreBoardOnViewport();
-
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="UI")
-	TSubclassOf<UUserWidget> ScoreBoardWidget;
-
-	UPROPERTY()
-	class UScoreBoard* ScoreBoard;
+	TSubclassOf<UUserWidget> MainMenuWidget;
 	
 };

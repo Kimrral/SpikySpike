@@ -5,24 +5,19 @@
 
 #include "Blueprint/UserWidget.h"
 #include "Blueprint/WidgetBlueprintLibrary.h"
+#include "Kismet/GameplayStatics.h"
 #include "SpikySpike/UI/ScoreBoard.h"
 
 void ASSPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
 
-	if (IsValid(MainMenuWidget) && IsLocalController())
-	{
-		// 위젯 생성
-		if (UUserWidget* WidgetInstance = CreateWidget<UUserWidget>(this, MainMenuWidget); IsValid(WidgetInstance))
-		{
-			// 뷰포트에 위젯 추가
-			WidgetInstance->AddToViewport();
-		}
-	}
+	ScoreBoardOnViewport();
 
-	UWidgetBlueprintLibrary::SetInputMode_UIOnlyEx(this);  
-	SetShowMouseCursor(true); 
+	if (APlayerCameraManager* const CameraManager = Cast<APlayerCameraManager>(UGameplayStatics::GetPlayerCameraManager(GetWorld(), 0)))
+	{
+		CameraManager->StartCameraFade(1, 0, 2.0, FColor::Black, false, false);
+	}
 }
 
 void ASSPlayerController::ScoreBoardOnViewport()
