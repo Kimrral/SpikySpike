@@ -13,5 +13,33 @@ UCLASS()
 class SPIKYSPIKE_API UMainMenu : public UUserWidget
 {
 	GENERATED_BODY()
+
+public:
+
+	virtual void NativeConstruct() override;
+	
+	UPROPERTY(VisibleAnywhere, meta = (BindWidget))
+	class UButton* Btn_GameStart;
+
+	UPROPERTY(VisibleAnywhere, meta = (BindWidget))
+	class UButton* Btn_QuitGame;
+
+	UPROPERTY(VisibleAnywhere, meta = (BindWidget))
+	class UWidgetSwitcher* WidgetSwitcher_MainMenu;
+
+	UPROPERTY()
+	class APlayerController* Controller;
+
+	UFUNCTION()
+	void StartGame();
+
+	UFUNCTION()
+	void QuitGame();
+
+	UFUNCTION()
+	void QuitYes() const;
+
+	UFUNCTION()
+	void QuitNo() const;
 	
 };
