@@ -41,7 +41,7 @@ private:
     TArray<int32> TeamScores;
 
     UPROPERTY(Replicated)
-    int32 ScoredTeam = -1;
+    int32 ScoredTeam;
 
     // Function to update the team scores
     UFUNCTION()

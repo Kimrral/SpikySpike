@@ -21,6 +21,9 @@ public:
 
 	FORCEINLINE void SetTeamID(const int32 InTeamID) { TeamID = InTeamID; }
 
+	UFUNCTION()
+	void OnRep_TeamScores();
+
 private:
 	// Team ID for this player
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Team", meta = (AllowPrivateAccess = "true"))

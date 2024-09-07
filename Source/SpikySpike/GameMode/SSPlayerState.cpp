@@ -7,3 +7,8 @@ ASSPlayerState::ASSPlayerState()
 {
 
 }
+
+void ASSPlayerState::OnRep_TeamScores()
+{
+	UE_LOG(LogTemp, Warning, TEXT("Player State Get Replicated TemScored!"));
+}

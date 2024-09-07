@@ -18,6 +18,9 @@ ASSVolleyBall::ASSVolleyBall()
 
     // Bind the OnBallHit function to the OnComponentHit event
     BallMesh->OnComponentHit.AddDynamic(this, &ASSVolleyBall::OnBallHit);
+
+    bReplicates = true;
+    SetReplicatingMovement(true);
 }
 
 void ASSVolleyBall::BeginPlay()
