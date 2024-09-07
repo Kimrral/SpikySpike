@@ -26,4 +26,9 @@ public:
 	UPROPERTY()
 	class UScoreBoard* ScoreBoard;
 	
+	UPROPERTY(EditDefaultsOnly, Category="Camera")
+	class UClass* CameraActorClass;
+
+	UFUNCTION(Client, Reliable)
+	void SetViewTargetClient();
 };

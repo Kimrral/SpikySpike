@@ -3,6 +3,7 @@
 #include "SSGameMode.h"
 #include "SSGameState.h"
 #include "SSPlayerState.h"
+#include "SpikySpike/Player/SSPlayerController.h"
 #include "GameFramework/PawnMovementComponent.h"
 #include "SpikySpike/Ball/SSVolleyBall.h"
 #include "UObject/ConstructorHelpers.h"
@@ -23,7 +24,7 @@ void ASSGameMode::StartRound()
 {
 	UE_LOG(LogTemp, Warning, TEXT("Restarting The Game"));
 
-	// ÇÃ·¹ÀÌ¾î Æ®·£½ºÆû ¹× ¿òÁ÷ÀÓ ÃÊ±âÈ­
+	// í”Œë ˆì´ì–´ íŠ¸ëžœìŠ¤í¼ ë° ì›€ì§ìž„ ì´ˆê¸°í™”
 	for (const auto PlayerState : GameState->PlayerArray)
 	{
 		APlayerController* PlayerController = PlayerState->GetPlayerController();
@@ -38,17 +39,20 @@ void ASSGameMode::StartRound()
 
 				Pawn->GetMovementComponent()->StopMovementImmediately();
 			}
+
+			ASSPlayerController* SSPlayerController = Cast<ASSPlayerController>(PlayerController);
+			SSPlayerController->SetViewTargetClient();
 		}
 	}
 
-	// °ø À§Ä¡ ¹× ¿òÁ÷ÀÓ ÃÊ±âÈ­
+	// ê³µ ìœ„ì¹˜ ë° ì›€ì§ìž„ ì´ˆê¸°í™”
 	SSVolleyBall->SetActorLocation(BallSpawnLocation);
 
 	UPrimitiveComponent* BallRootComponent = Cast<UPrimitiveComponent>(SSVolleyBall->GetRootComponent());
     if (BallRootComponent)
     {
-        BallRootComponent->SetPhysicsLinearVelocity(FVector::ZeroVector);  // ¼Óµµ ÃÊ±âÈ­
-        BallRootComponent->SetPhysicsAngularVelocityInDegrees(FVector::ZeroVector);  // È¸Àü ÃÊ±âÈ­
+        BallRootComponent->SetPhysicsLinearVelocity(FVector::ZeroVector);  // ì†ë„ ì´ˆê¸°í™”
+        BallRootComponent->SetPhysicsAngularVelocityInDegrees(FVector::ZeroVector);  // íšŒì „ ì´ˆê¸°í™”
     }
 }
 

@@ -37,3 +37,9 @@ void ASSPlayerController::ScoreBoardOnViewport()
 	UWidgetBlueprintLibrary::SetInputMode_GameOnly(this);  
 	SetShowMouseCursor(false); 
 }
+
+void ASSPlayerController::SetViewTargetClient_Implementation()
+{
+	AActor* CameraActor = GetWorld()->SpawnActor(CameraActorClass);
+	SetViewTarget(CameraActor);
+}
