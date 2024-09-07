@@ -52,6 +52,11 @@ void ASSGameState::IncrementScore(const int32 TeamIndex)
         ScoredTeam = TeamIndex;
         TeamScores[ScoredTeam]++;
 
+        if (HasAuthority())
+        {
+	        OnRep_TeamScores();
+        }
+
     	UE_LOG(LogTemp, Warning, TEXT("Team %d Scores, Total Score : %d"), ScoredTeam, GetTeamScore(ScoredTeam));
 
         ASSGameMode* SSGameMode = GetWorld()->GetAuthGameMode<ASSGameMode>();
