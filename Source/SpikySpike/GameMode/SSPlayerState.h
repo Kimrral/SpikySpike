@@ -15,18 +15,7 @@ class SPIKYSPIKE_API ASSPlayerState : public APlayerState
 	GENERATED_BODY()
 
 public:
-	ASSPlayerState();
-
-	FORCEINLINE int32 GetTeamID() const { return TeamID; }
-
-	FORCEINLINE void SetTeamID(const int32 InTeamID) { TeamID = InTeamID; }
-
 	void OnRep_TeamScores() const;
 
 	void UpdateScoreUI() const;
-
-private:
-	// Team ID for this player
-    UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Team", meta = (AllowPrivateAccess = "true"))
-    int32 TeamID = -1;
 };

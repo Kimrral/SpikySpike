@@ -19,7 +19,7 @@ public:
 
     FORCEINLINE int32 GetGoalScore() const { return GoalScore; }
 
-    void RestartMatch();
+    void StartRound();
 
     virtual void EndMatch() override;
 
@@ -31,11 +31,12 @@ public:
 protected:
     virtual void BeginPlay() override;
 
-    virtual void StartMatch() override;
-
     virtual void PostLogin(APlayerController* NewPlayer) override;
 
 private:
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "GameRules", meta = (AllowPrivateAccess = true))
+    int32 MinNumPlayer;
+
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "GameRules", meta = (AllowPrivateAccess = true))
     int32 GoalScore;
 
