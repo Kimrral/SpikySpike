@@ -46,8 +46,7 @@ void UMainMenu::QuitYes()
 {
 	if (IsValid(Controller))
 	{
-		const TEnumAsByte<EQuitPreference::Type> Types = EQuitPreference::Quit;
-		UKismetSystemLibrary::QuitGame(GetWorld(), Controller, Types, false);
+		UKismetSystemLibrary::QuitGame(this, Controller, EQuitPreference::Quit, true);
 	}
 }
 
