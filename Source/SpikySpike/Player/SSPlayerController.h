@@ -17,7 +17,16 @@ class SPIKYSPIKE_API ASSPlayerController : public APlayerController
 public:
 	virtual void BeginPlay() override;
 
+	UFUNCTION()
+	void ScoreBoardOnViewport();
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="UI")
 	TSubclassOf<UUserWidget> MainMenuWidget;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="UI")
+	TSubclassOf<UUserWidget> ScoreBoardWidget;
+
+	UPROPERTY()
+	class UScoreBoard* ScoreBoard;
 	
 };

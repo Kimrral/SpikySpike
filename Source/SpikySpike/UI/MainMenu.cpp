@@ -3,16 +3,16 @@
 
 #include "SpikySpike/UI/MainMenu.h"
 
-#include "Blueprint/WidgetBlueprintLibrary.h"
 #include "Components/Button.h"
 #include "Components/WidgetSwitcher.h"
 #include "Kismet/KismetSystemLibrary.h"
+#include "SpikySpike/Player/SSPlayerController.h"
 
 void UMainMenu::NativeConstruct()
 {
 	Super::NativeConstruct();
 
-	Controller = Cast<APlayerController>(GetWorld()->GetFirstPlayerController());
+	Controller = Cast<ASSPlayerController>(GetWorld()->GetFirstPlayerController());
 
 	WidgetSwitcher_MainMenu->SetActiveWidgetIndex(0);
 
@@ -27,10 +27,10 @@ void UMainMenu::NativeConstruct()
 void UMainMenu::StartGame()
 {
 	if(IsValid(Controller))
-	{
-		UWidgetBlueprintLibrary::SetInputMode_GameOnly(Controller);  
-		Controller->SetShowMouseCursor(false);
+	{		
 		this->RemoveFromParent();
+
+		Controller->ScoreBoardOnViewport();
 	}	
 }
 

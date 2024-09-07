@@ -4,38 +4,37 @@
 #include "SSPlayerState.h"
 
 #include "SSGameState.h"
+#include "Components/TextBlock.h"
+#include "SpikySpike/Player/SSPlayerController.h"
+#include "SpikySpike/UI/ScoreBoard.h"
 
 ASSPlayerState::ASSPlayerState()
 {
-
 }
 
-void ASSPlayerState::OnRep_TeamScores()
+void ASSPlayerState::OnRep_TeamScores() const
 {
 	UpdateScoreUI();
 }
 
-void ASSPlayerState::UpdateScoreUI()
+void ASSPlayerState::UpdateScoreUI() const
 {
-	if (GetNetMode() == NM_DedicatedServer)
+	if (const ASSPlayerController* PC = Cast<ASSPlayerController>(GetOwner()); PC && PC->IsLocalController())
 	{
-		return;
-	}
-
-	APlayerController* PC = Cast<APlayerController>(GetOwner());
-	if (PC && PC->IsLocalController())
-	{
-		ASSGameState* SSGameState = PC->GetWorld()->GetGameState<ASSGameState>();
-		if (SSGameState)
+		if (const ASSGameState* SSGameState = PC->GetWorld()->GetGameState<ASSGameState>())
 		{
-			const int32 ScoredTeam = SSGameState->GetScoredTeam();
-			if (TeamID == ScoredTeam)
+			if (IsValid(PC->ScoreBoard))
 			{
-				
-			}
-			else
-			{
-				
+				if (const int32 ScoredTeam = SSGameState->GetScoredTeam(); ScoredTeam == 0)
+				{
+					PC->ScoreBoard->FirstTeamScoreNumber++;
+					PC->ScoreBoard->FirstTeamScore->SetText(FText::AsNumber(PC->ScoreBoard->FirstTeamScoreNumber));
+				}
+				else
+				{
+					PC->ScoreBoard->SecondTeamScoreNumber++;
+					PC->ScoreBoard->SecondTeamScore->SetText(FText::AsNumber(PC->ScoreBoard->SecondTeamScoreNumber));
+				}
 			}
 		}
 	}

@@ -34,7 +34,7 @@ public:
 	class UWidgetSwitcher* WidgetSwitcher_MainMenu;
 
 	UPROPERTY()
-	class APlayerController* Controller;
+	class ASSPlayerController* Controller;
 
 	// Appear Animation
 	UPROPERTY(BlueprintReadWrite, Transient, meta = (BindWidgetAnim))

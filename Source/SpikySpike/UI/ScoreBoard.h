@@ -39,5 +39,11 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float Countdown = 60.f;
 
+	UPROPERTY()
+	int32 FirstTeamScoreNumber = 0;
+
+	UPROPERTY()
+	int32 SecondTeamScoreNumber = 0;
+
 	
 };
