@@ -27,6 +27,7 @@ public:
 	TSubclassOf<ASSVolleyBall> VolleyBallClass;
 
     FTimerHandle RoundTimerHandle;
+    FTimerHandle StartTimerHandle;
 
 protected:
     virtual void BeginPlay() override;
@@ -47,5 +48,5 @@ private:
     FVector BallSpawnLocation;
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "GameRules", meta = (AllowPrivateAccess = true))
-    TWeakObjectPtr<ASSVolleyBall> SSVolleyBall;
+    TObjectPtr<ASSVolleyBall> SSVolleyBall;
 };

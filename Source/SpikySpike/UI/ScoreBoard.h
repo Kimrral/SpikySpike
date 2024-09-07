@@ -18,7 +18,7 @@ class SPIKYSPIKE_API UScoreBoard : public UUserWidget
 public:
 	virtual void NativeConstruct() override;
 	virtual void NativeTick(const FGeometry& MyGeometry, float InDeltaTime) override;
-	void SetCountdownTimer();
+	void SetCountdownTimer(float InDeltaTime);
 
 	// Timer Value Text Block
 	UPROPERTY(VisibleAnywhere, meta = (BindWidget))

@@ -24,7 +24,7 @@ void ASSGameMode::StartRound()
 {
 	UE_LOG(LogTemp, Warning, TEXT("Restarting The Game"));
 
-	// í”Œë ˆì´ì–´ íŠ¸ëžœìŠ¤í¼ ë° ì›€ì§ìž„ ì´ˆê¸°í™”
+	// ÇÃ·¹ÀÌ¾î Æ®·£½ºÆû ¹× ¿òÁ÷ÀÓ ÃÊ±âÈ­
 	for (const auto PlayerState : GameState->PlayerArray)
 	{
 		APlayerController* PlayerController = PlayerState->GetPlayerController();
@@ -45,15 +45,28 @@ void ASSGameMode::StartRound()
 		}
 	}
 
-	// ê³µ ìœ„ì¹˜ ë° ì›€ì§ìž„ ì´ˆê¸°í™”
+	// °ø À§Ä¡ ¹× ¿òÁ÷ÀÓ ÃÊ±âÈ­
 	SSVolleyBall->SetActorLocation(BallSpawnLocation);
 
 	UPrimitiveComponent* BallRootComponent = Cast<UPrimitiveComponent>(SSVolleyBall->GetRootComponent());
     if (BallRootComponent)
     {
-        BallRootComponent->SetPhysicsLinearVelocity(FVector::ZeroVector);  // ì†ë„ ì´ˆê¸°í™”
-        BallRootComponent->SetPhysicsAngularVelocityInDegrees(FVector::ZeroVector);  // íšŒì „ ì´ˆê¸°í™”
+        BallRootComponent->SetPhysicsLinearVelocity(FVector::ZeroVector);  // ¼Óµµ ÃÊ±âÈ­
+        BallRootComponent->SetPhysicsAngularVelocityInDegrees(FVector::ZeroVector);  // È¸Àü ÃÊ±âÈ­
     }
+
+	// °ø À§Ä¡ ¹× ¿òÁ÷ÀÓ ÃÊ±âÈ­
+	if (SSVolleyBall)
+	{
+		SSVolleyBall->SetActorLocation(BallSpawnLocation);
+
+		if (SSVolleyBall->BallMesh)
+		{
+			SSVolleyBall->BallMesh->SetPhysicsLinearVelocity(FVector::ZeroVector);  // ¼Óµµ ÃÊ±âÈ­
+	        SSVolleyBall->BallMesh->SetPhysicsAngularVelocityInDegrees(FVector::ZeroVector);  // È¸Àü ÃÊ±âÈ­
+			SSVolleyBall->BallMesh->SetSimulatePhysics(true);
+		}
+	}
 }
 
 void ASSGameMode::EndMatch()
@@ -75,24 +88,33 @@ void ASSGameMode::BeginPlay()
 {
     Super::BeginPlay();
 
+	if (VolleyBallClass)
+	{
+		SSVolleyBall = GetWorld()->SpawnActor<ASSVolleyBall>(VolleyBallClass, BallSpawnLocation, FRotator::ZeroRotator);
+		if (SSVolleyBall && SSVolleyBall->BallMesh)
+		{
+			SSVolleyBall->BallMesh->SetSimulatePhysics(false);
+		}
+	}
 }
 
 void ASSGameMode::PostLogin(APlayerController* NewPlayer)
 {
 	Super::PostLogin(NewPlayer);
 
-	if (NumPlayers == MinNumPlayer)
+	if (GetNetMode() == NM_Standalone || NumPlayers == MinNumPlayer)
 	{
+		ASSGameState* SSGameState = GetGameState<ASSGameState>();
+		if (SSGameState)
+		{
+			SSGameState->GameStartTime = GetWorld()->GetTimeSeconds();
+		}
+
 		if (RoundTimeSeconds > 0)
 		{
 			GetWorldTimerManager().SetTimer(RoundTimerHandle, this, &ASSGameMode::EndMatch, RoundTimeSeconds, false);
 		}
 
-		if (VolleyBallClass)
-		{
-			SSVolleyBall = GetWorld()->SpawnActor<ASSVolleyBall>(VolleyBallClass, FVector::ZeroVector, FRotator::ZeroRotator);
-		}
-
-		StartRound();
+		GetWorldTimerManager().SetTimer(StartTimerHandle, this, &ASSGameMode::StartRound, 2.0f, false);
 	}
 }

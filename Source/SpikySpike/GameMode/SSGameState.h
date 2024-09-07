@@ -23,6 +23,9 @@ protected:
     virtual void PostInitializeComponents() override;
 
 public:
+    UPROPERTY(Replicated, BlueprintReadOnly, Category = "GameRule")
+    float GameStartTime;
+
     // Function to handle ball touch
     UFUNCTION(BlueprintCallable, Category = "Score")
     void HandleBallTouch(AActor* InActor);
@@ -52,12 +55,4 @@ private:
 
     // Function to increment the score for a specific team
     void IncrementScore(int32 TeamIndex);
-
-
-private:
-	UPROPERTY()
-	TArray<int32> TeamAPlayerIndex;
-
-	UPROPERTY()
-	TArray<int32> TeamBPlayerIndex;
 };

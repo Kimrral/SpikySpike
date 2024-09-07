@@ -14,6 +14,7 @@ ASSGameState::ASSGameState()
     TeamScores[1] = 0; // Team 1
 
     ScoredTeam = -1;
+    GameStartTime = 0.f;
 
     // Ensure the game mode replicates
     bReplicates = true;
@@ -117,4 +118,5 @@ void ASSGameState::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLife
 
     DOREPLIFETIME(ASSGameState, TeamScores);
     DOREPLIFETIME(ASSGameState, ScoredTeam);
+    DOREPLIFETIME(ASSGameState, GameStartTime);
 }
