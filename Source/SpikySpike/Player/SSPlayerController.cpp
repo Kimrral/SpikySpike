@@ -10,7 +10,7 @@ void ASSPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
 
-	if (IsValid(MainMenuWidget))
+	if (IsValid(MainMenuWidget) && IsLocalController())
 	{
 		// 위젯 생성
 		if (UUserWidget* WidgetInstance = CreateWidget<UUserWidget>(this, MainMenuWidget))
