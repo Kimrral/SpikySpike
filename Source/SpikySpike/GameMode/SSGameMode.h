@@ -26,18 +26,25 @@ public:
     UPROPERTY(EditAnywhere, NoClear, BlueprintReadOnly, Category=Classes)
 	TSubclassOf<ASSVolleyBall> VolleyBallClass;
 
+    FTimerHandle RoundTimerHandle;
+
 protected:
     virtual void BeginPlay() override;
+
+    virtual void StartMatch() override;
 
 private:
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "GameRules", meta = (AllowPrivateAccess = true))
     int32 GoalScore;
 
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "GameRules", meta = (AllowPrivateAccess = true))
+    float RoundTimeSeconds;
+
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "GameRules", meta = (AllowPrivateAccess = true))
     FVector BallSpawnLocation;
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "GameRules", meta = (AllowPrivateAccess = true))
-    TObjectPtr<ASSVolleyBall> SSVolleyBall;
+    TWeakObjectPtr<ASSVolleyBall> SSVolleyBall;
 };
 
 
