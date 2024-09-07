@@ -63,7 +63,7 @@ void ASSGameState::IncrementScore(const int32 TeamIndex)
 	        }
             else
             {
-	            SSGameMode->RestartMatch();
+	            SSGameMode->StartRound();
             }
         }
     }

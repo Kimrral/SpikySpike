@@ -8,10 +8,6 @@
 #include "SpikySpike/Player/SSPlayerController.h"
 #include "SpikySpike/UI/ScoreBoard.h"
 
-ASSPlayerState::ASSPlayerState()
-{
-}
-
 void ASSPlayerState::OnRep_TeamScores() const
 {
 	UpdateScoreUI();
