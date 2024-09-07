@@ -23,8 +23,6 @@ public:
 
     virtual void EndMatch() override;
 
-	virtual AActor* ChoosePlayerStart_Implementation(AController* Player) override;
-
     UPROPERTY(EditAnywhere, NoClear, BlueprintReadOnly, Category=Classes)
 	TSubclassOf<ASSVolleyBall> VolleyBallClass;
 

@@ -96,23 +96,3 @@ void ASSGameMode::PostLogin(APlayerController* NewPlayer)
 		SSPlayerState->SetTeamID(NumPlayers % 2);
 	}
 }
-
-AActor* ASSGameMode::ChoosePlayerStart_Implementation(AController* Player)
-{
-	AActor* ReturnActor = Super::ChoosePlayerStart_Implementation(Player);
-
-	ASSPlayerState* SSPlayerState = Cast<ASSPlayerState>(Player->PlayerState);
-	if (!Player->IsLocalPlayerController() || !SSPlayerState)
-	{
-		return ReturnActor;
-	}
-
-	const int32 TeamID = SSPlayerState->GetTeamID();
-	if (TeamID == -1)
-	{
-		return ReturnActor;
-	}
-
-	const FString TeamTag = FString::Printf(TEXT("Team%d"), TeamID);
-	return FindPlayerStart(Player, TeamTag);
-}
