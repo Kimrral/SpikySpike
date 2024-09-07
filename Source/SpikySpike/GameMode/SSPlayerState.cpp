@@ -2,12 +2,10 @@
 
 
 #include "SSPlayerState.h"
-
 #include "SSGameState.h"
 #include "Components/TextBlock.h"
 #include "SpikySpike/Player/SSPlayerController.h"
 #include "SpikySpike/UI/ScoreBoard.h"
-#include "SpikySpike/UI/StageResult.h"
 
 void ASSPlayerState::OnRep_TeamScores() const
 {
@@ -21,7 +19,6 @@ void ASSPlayerState::OnRep_RoundWinTeam() const
 		if (const ASSGameState* SSGameState = PC->GetWorld()->GetGameState<ASSGameState>())
 		{
 			UE_LOG(LogTemp, Warning, TEXT("Result"))
-			// ���⿡ ���� ������ �� ���� �߰��Ͻø� �˴ϴ�.
 			if (const int32 RoundWinTeam = SSGameState->GetRoundWinTeam(); RoundWinTeam == 1)
 			{
 				PC->StageResultOnViewport(0);
@@ -31,6 +28,14 @@ void ASSPlayerState::OnRep_RoundWinTeam() const
 				PC->StageResultOnViewport(1);
 			}
 		}
+	}
+}
+
+void ASSPlayerState::OnRep_RoundEnd() const
+{
+	if (ASSPlayerController* PC = Cast<ASSPlayerController>(GetOwner()); PC && PC->IsLocalController())
+	{
+		// 라운드 종료시 페이드 인 / 페이드 아웃 로직
 	}
 }
 

@@ -19,5 +19,7 @@ public:
 
 	void OnRep_RoundWinTeam() const;
 
+	void OnRep_RoundEnd() const;
+
 	void UpdateScoreUI() const;
 };

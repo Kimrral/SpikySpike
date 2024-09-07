@@ -1,7 +1,6 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "SSGameState.h"
-
 #include "SSGameMode.h"
 #include "SSPlayerState.h"
 #include "Net/UnrealNetwork.h"
@@ -21,19 +20,6 @@ ASSGameState::ASSGameState()
 
     // Ensure the game mode replicates
     bReplicates = true;
-}
-
-void ASSGameState::BeginPlay()
-{
-    Super::BeginPlay();
-
-    // Optionally spawn scoring volumes or set up other game elements here
-}
-
-void ASSGameState::PostInitializeComponents()
-{
-	Super::PostInitializeComponents();
-
 }
 
 void ASSGameState::HandleBallTouch(AActor* InActor)
@@ -108,6 +94,23 @@ int32 ASSGameState::GetWinningTeam() const
     }
 
 	return -1; // Tie
+}
+
+void ASSGameState::OnRep_RoundEnd()
+{
+    if (bEnableIncreaseScore)
+    {
+	    return;
+    }
+
+    for (APlayerState* PlayerState : PlayerArray)
+    {
+        ASSPlayerState* SSPlayerState = Cast<ASSPlayerState>(PlayerState);
+	    if (SSPlayerState)
+	    {
+		    SSPlayerState->OnRep_RoundEnd();
+	    }
+    }
 }
 
 void ASSGameState::OnRep_TeamScores()
