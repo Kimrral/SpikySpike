@@ -90,6 +90,21 @@ void ASSGameMode::EndRound() const
 		}
 	}
 
+	// Destroy Player
+	for (const auto PlayerState : GameState->PlayerArray)
+	{
+		APlayerController* PC = PlayerState->GetPlayerController();
+		if (PC)
+		{
+			APawn* PlayerPawn = PC->GetPawn();
+			if (PlayerPawn)
+			{
+				PlayerPawn->Destroy(true);
+			}
+		}
+	}
+
+	// Destroy Ball
 	SSVolleyBall->Destroy(true);
 }
 
