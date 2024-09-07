@@ -17,11 +17,6 @@ class SPIKYSPIKE_API ASSGameState : public AGameState
 public:
 	ASSGameState();
 
-protected:
-	virtual void BeginPlay() override;
-
-    virtual void PostInitializeComponents() override;
-
 public:
     UPROPERTY(Replicated, BlueprintReadOnly, Category = "GameRule")
     float GameStartTime;
@@ -47,7 +42,12 @@ public:
     int32 GetWinningTeam() const;
 
     FTimerHandle RoundRestartTimerHandle;
+
+    UPROPERTY(ReplicatedUsing = OnRep_RoundEnd)
     bool bEnableIncreaseScore;
+
+    UFUNCTION()
+    void OnRep_RoundEnd();
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "GameRule")
     float RoundRestartTime;
