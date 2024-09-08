@@ -5,7 +5,9 @@
 #include "CoreMinimal.h"
 #include "Animation/AnimInstance.h"
 #include "SpikySpike/Ball/SSVolleyBall.h"
+#include "NiagaraFunctionLibrary.h"
 #include "SSCharacterAnimInstance.generated.h"
+
 
 /**
  * 
@@ -34,7 +36,7 @@ public:
 	void SpikeBall2(const ASSVolleyBall* VolleyBall) const;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	class UParticleSystem* SpikeParticle;
+	class UNiagaraSystem* SpikeParticle;
 	
 protected:
 	bool IsPlayerFacingRight() const;

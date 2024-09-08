@@ -34,9 +34,9 @@ void USSCharacterAnimInstance::AnimNotify_SpikeHitPoint()
 			{
 				//SpikeBall(VolleyBall);
 				SpikeBall2(VolleyBall);
-				UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), SpikeParticle,
-				                                         AnimOwner->GetMesh()->GetBoneLocation(
-					                                         FName("SpikeParticleSocket")));
+				UNiagaraFunctionLibrary::SpawnSystemAtLocation(GetWorld(), SpikeParticle,
+				                                               AnimOwner->GetMesh()->GetBoneLocation(
+					                                               FName("SpikeParticleSocket")));
 			}
 		}
 	}
