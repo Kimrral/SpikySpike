@@ -17,7 +17,6 @@ class SPIKYSPIKE_API UScoreBoard : public UUserWidget
 	
 public:
 	virtual void NativeConstruct() override;
-	virtual void NativeTick(const FGeometry& MyGeometry, float InDeltaTime) override;
 
 	// First Team Score Text Block
 	UPROPERTY(VisibleAnywhere, meta = (BindWidget))
@@ -25,11 +24,7 @@ public:
 
 	// Second Team Score Text Block
 	UPROPERTY(VisibleAnywhere, meta = (BindWidget))
-	class UTextBlock* SecondTeamScore;
-
-	// Appear Animation
-	UPROPERTY(BlueprintReadWrite, Transient, meta = (BindWidgetAnim))
-	class UWidgetAnimation* CountdownConstruct;
+	UTextBlock* SecondTeamScore;
 
 	UPROPERTY()
 	int32 FirstTeamScoreNumber = 0;

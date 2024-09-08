@@ -40,14 +40,9 @@ private:
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "GameRules", meta = (AllowPrivateAccess = true))
     int32 GoalScore;
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "GameRules", meta = (AllowPrivateAccess = true))
-    float RoundTimeSeconds;
-
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "GameRules", meta = (AllowPrivateAccess = true))
     FVector BallSpawnLocation;
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "GameRules", meta = (AllowPrivateAccess = true))
     TObjectPtr<ASSVolleyBall> SSVolleyBall;
-
-    bool bGameStarted = false;
 };
