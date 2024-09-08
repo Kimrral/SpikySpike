@@ -48,4 +48,6 @@ private:
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "GameRules", meta = (AllowPrivateAccess = true))
     TObjectPtr<ASSVolleyBall> SSVolleyBall;
+
+    bool bGameStarted = false;
 };

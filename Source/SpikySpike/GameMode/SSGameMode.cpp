@@ -50,16 +50,6 @@ void ASSGameMode::StartRound()
 	}
 
 	// 공 위치 및 움직임 초기화
-	SSVolleyBall->SetActorLocation(BallSpawnLocation);
-
-	UPrimitiveComponent* BallRootComponent = Cast<UPrimitiveComponent>(SSVolleyBall->GetRootComponent());
-    if (BallRootComponent)
-    {
-        BallRootComponent->SetPhysicsLinearVelocity(FVector::ZeroVector);  // 속도 초기화
-        BallRootComponent->SetPhysicsAngularVelocityInDegrees(FVector::ZeroVector);  // 회전 초기화
-    }
-
-	// 공 위치 및 움직임 초기화
 	if (SSVolleyBall)
 	{
 		SSVolleyBall->SetActorLocation(BallSpawnLocation);
@@ -75,6 +65,12 @@ void ASSGameMode::StartRound()
 	ASSGameState* SSGameState = GetGameState<ASSGameState>();
 	if (SSGameState)
 	{
+		if (bGameStarted)
+		{
+			SSGameState->GameStartTime = GetWorld()->GetTimeSeconds();
+			bGameStarted = false;
+		}
+
 		SSGameState->bEnableIncreaseScore = true;
 	}
 }
@@ -106,6 +102,8 @@ void ASSGameMode::EndRound() const
 
 	// Destroy Ball
 	SSVolleyBall->Destroy(true);
+
+	GetWorldTimerManager().ClearAllTimersForObject(this);
 }
 
 void ASSGameMode::BeginPlay()
@@ -140,5 +138,6 @@ void ASSGameMode::PostLogin(APlayerController* NewPlayer)
 		}
 
 		GetWorldTimerManager().SetTimer(StartTimerHandle, this, &ASSGameMode::StartRound, 2.0f, false);
+		bGameStarted = true;
 	}
 }
