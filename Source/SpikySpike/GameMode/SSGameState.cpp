@@ -145,4 +145,5 @@ void ASSGameState::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLife
     DOREPLIFETIME(ASSGameState, ScoredTeam);
 	DOREPLIFETIME(ASSGameState, RoundWinTeam);
     DOREPLIFETIME(ASSGameState, GameStartTime);
+	DOREPLIFETIME(ASSGameState, bEnableIncreaseScore);
 }

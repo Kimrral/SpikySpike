@@ -36,6 +36,7 @@ void ASSPlayerState::OnRep_RoundEnd()
 {
 	if (const ASSPlayerController* PC = Cast<ASSPlayerController>(GetOwner()); PC && PC->IsLocalController())
 	{
+		UE_LOG(LogTemp, Warning, TEXT("Round End"))
 		ProcessCameraFade();
 	}
 }
@@ -70,16 +71,21 @@ void ASSPlayerState::ProcessCameraFade() const
 		UGameplayStatics::GetPlayerCameraManager(GetWorld(), 0)))
 	{
 		CameraManager->StopCameraFade();
-		CameraManager->StartCameraFade(0, 1, 2.f, FColor::Black, false, false);
+		CameraManager->StartCameraFade(0, 1, 3.f, FColor::Black, false, false);
 
+		// 페이드 인이 끝나는 2초 후에 페이드 아웃 시작
 		FTimerHandle TimerHandle;
 		FTimerDelegate TimerDelegate;
-		TimerDelegate.BindLambda([&]()
+		TimerDelegate.BindLambda([CameraManager]() // CameraManager를 람다 내에서 안전하게 사용
 		{
-			CameraManager->StopCameraFade();
-			CameraManager->StartCameraFade(1.0, 0, 2.f, FColor::Black, false, false);
+			if (CameraManager) // CameraManager가 유효한지 확인
+			{
+				CameraManager->StopCameraFade();
+				CameraManager->StartCameraFade(1.0, 0, 3.f, FColor::Black, false, false);
+			}
 		});
 
-		GetWorldTimerManager().SetTimer(TimerHandle, TimerDelegate, 2.f, false);
+		// 타이머가 페이드 인 시간 후에 실행되도록 설정
+		GetWorldTimerManager().SetTimer(TimerHandle, TimerDelegate, 3.f, false);
 	}
 }
