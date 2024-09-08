@@ -122,3 +122,13 @@ void ASSGameMode::PostLogin(APlayerController* NewPlayer)
 		GetWorldTimerManager().SetTimer(StartTimerHandle, this, &ASSGameMode::StartRound, 2.0f, false);
 	}
 }
+
+void ASSGameMode::Logout(AController* Exiting)
+{
+	Super::Logout(Exiting);
+
+	if (NumPlayers == 0)
+	{
+		RestartGame();
+	}
+}

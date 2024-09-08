@@ -33,6 +33,8 @@ protected:
 
     virtual void PostLogin(APlayerController* NewPlayer) override;
 
+    virtual void Logout(AController* Exiting) override;
+
 private:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "GameRules", meta = (AllowPrivateAccess = true))
     int32 MinNumPlayer;
