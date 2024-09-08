@@ -16,7 +16,6 @@ ASSGameMode::ASSGameMode()
 
 	GoalScore = 3;
 	MinNumPlayer = 2;
-	RoundTimeSeconds = 60.f;
 	BallSpawnLocation = FVector(870.000000, 570.000000, 850.000000);
 }
 
@@ -65,12 +64,6 @@ void ASSGameMode::StartRound()
 	ASSGameState* SSGameState = GetGameState<ASSGameState>();
 	if (SSGameState)
 	{
-		if (bGameStarted)
-		{
-			SSGameState->GameStartTime = GetWorld()->GetTimeSeconds();
-			bGameStarted = false;
-		}
-
 		SSGameState->bEnableIncreaseScore = true;
 	}
 }
@@ -126,12 +119,6 @@ void ASSGameMode::PostLogin(APlayerController* NewPlayer)
 
 	if (GetNetMode() == NM_Standalone || NumPlayers == MinNumPlayer)
 	{
-		if (RoundTimeSeconds > 0)
-		{
-			GetWorldTimerManager().SetTimer(RoundTimerHandle, this, &ASSGameMode::EndRound, RoundTimeSeconds, false);
-		}
-
 		GetWorldTimerManager().SetTimer(StartTimerHandle, this, &ASSGameMode::StartRound, 2.0f, false);
-		bGameStarted = true;
 	}
 }
