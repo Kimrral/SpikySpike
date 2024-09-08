@@ -26,6 +26,9 @@ public:
 	UPROPERTY(VisibleAnywhere, meta = (BindWidget))
 	UTextBlock* SecondTeamScore;
 
+	UPROPERTY(BlueprintReadWrite, Transient, meta = (BindWidgetAnim))
+	class UWidgetAnimation* CountdownConstruct;	
+
 	UPROPERTY()
 	int32 FirstTeamScoreNumber = 0;
 

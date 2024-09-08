@@ -9,4 +9,6 @@ void UScoreBoard::NativeConstruct()
 
 	FirstTeamScore->SetText(FText::AsNumber(FirstTeamScoreNumber));
 	SecondTeamScore->SetText(FText::AsNumber(SecondTeamScoreNumber));
+
+	PlayAnimation(CountdownConstruct);
 }
