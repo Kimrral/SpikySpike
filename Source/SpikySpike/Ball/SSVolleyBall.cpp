@@ -2,6 +2,7 @@
 
 #include "SSVolleyBall.h"
 #include "SpikySpike/GameMode/SSGameState.h"
+#include "Kismet/GameplayStatics.h"
 
 // Sets default values
 ASSVolleyBall::ASSVolleyBall()
@@ -42,12 +43,7 @@ void ASSVolleyBall::OnBallHit(UPrimitiveComponent* HitComponent, AActor* OtherAc
 
 void ASSVolleyBall::HandleBallCollision(AActor* OtherActor) const
 {
-    if (!HasAuthority())
-    {
-	    return;
-    }
-
-    if (OtherActor)
+    if (HasAuthority() && OtherActor)
     {
         // Check if the hit actor is a floor
         if (OtherActor->ActorHasTag("Floor"))
@@ -61,5 +57,12 @@ void ASSVolleyBall::HandleBallCollision(AActor* OtherActor) const
             }
         }
     }
+	else if (OtherActor)
+	{
+		if (OtherActor->ActorHasTag("Floor") || OtherActor->ActorHasTag("Wall"))
+		{
+			UGameplayStatics::PlaySound2D(GetWorld(), BounceSound);
+		}
+	}
 }
 

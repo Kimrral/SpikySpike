@@ -64,6 +64,8 @@ void USSCharacterAnimInstance::SpikeBall2(const ASSVolleyBall* VolleyBall) const
 	DrawDebugDirectionalArrow(GetWorld(), AnimOwner->GetActorLocation(),
 	                          AnimOwner->GetActorLocation() + DiagonalForceDirection * 100, 2, FColor::Green, false,
 	                          3.0f, 0, 2.f);
+
+	UGameplayStatics::PlaySound2D(GetWorld(), SpikeSound);
 }
 
 // 내적을 활용해 플레이어가 왼쪽/오른쪽을 보고 있는지 반환

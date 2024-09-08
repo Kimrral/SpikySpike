@@ -29,6 +29,9 @@ public:
 	// The static mesh component for the ball
 	UPROPERTY(VisibleAnywhere)
 	TObjectPtr<UStaticMeshComponent> BallMesh;
+	
+	UPROPERTY(EditDefaultsOnly)
+	TObjectPtr<class USoundBase> BounceSound;
 
 private:
 	// Function to handle scoring based on the ball collision

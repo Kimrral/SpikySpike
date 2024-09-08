@@ -38,6 +38,9 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	class UNiagaraSystem* SpikeParticle;
 	
+	UPROPERTY(EditDefaultsOnly)
+	TObjectPtr<class USoundBase> SpikeSound;
+
 protected:
 	bool IsPlayerFacingRight() const;
 };
