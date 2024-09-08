@@ -7,13 +7,14 @@
 #include "Components/WidgetSwitcher.h"
 #include "Kismet/GameplayStatics.h"
 #include "Kismet/KismetSystemLibrary.h"
+#include "SpikySpike/Player/SSLobbyController.h"
 #include "SpikySpike/Player/SSPlayerController.h"
 
 void UMainMenu::NativeConstruct()
 {
 	Super::NativeConstruct();
 
-	Controller = Cast<ASSPlayerController>(GetWorld()->GetFirstPlayerController());
+	Controller = Cast<ASSLobbyController>(GetWorld()->GetFirstPlayerController());
 
 	WidgetSwitcher_MainMenu->SetActiveWidgetIndex(0);
 
@@ -44,9 +45,10 @@ void UMainMenu::QuitGame()
 
 void UMainMenu::QuitYes()
 {
+	UE_LOG(LogTemp, Warning, TEXT("QuitYes"))
 	if (IsValid(Controller))
 	{
-		UKismetSystemLibrary::QuitGame(this, Controller, EQuitPreference::Quit, true);
+		UKismetSystemLibrary::QuitGame(GetWorld(), Controller, EQuitPreference::Quit, true);
 	}
 }
 
