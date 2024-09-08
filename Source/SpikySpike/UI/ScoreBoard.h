@@ -18,11 +18,6 @@ class SPIKYSPIKE_API UScoreBoard : public UUserWidget
 public:
 	virtual void NativeConstruct() override;
 	virtual void NativeTick(const FGeometry& MyGeometry, float InDeltaTime) override;
-	void SetCountdownTimer(float InDeltaTime);
-
-	// Timer Value Text Block
-	UPROPERTY(VisibleAnywhere, meta = (BindWidget))
-	class UTextBlock* CountdownValue;
 
 	// First Team Score Text Block
 	UPROPERTY(VisibleAnywhere, meta = (BindWidget))
@@ -35,9 +30,6 @@ public:
 	// Appear Animation
 	UPROPERTY(BlueprintReadWrite, Transient, meta = (BindWidgetAnim))
 	class UWidgetAnimation* CountdownConstruct;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	float Countdown = 60.f;
 
 	UPROPERTY()
 	int32 FirstTeamScoreNumber = 0;
