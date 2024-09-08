@@ -126,12 +126,6 @@ void ASSGameMode::PostLogin(APlayerController* NewPlayer)
 
 	if (GetNetMode() == NM_Standalone || NumPlayers == MinNumPlayer)
 	{
-		ASSGameState* SSGameState = GetGameState<ASSGameState>();
-		if (SSGameState)
-		{
-			SSGameState->GameStartTime = GetWorld()->GetTimeSeconds();
-		}
-
 		if (RoundTimeSeconds > 0)
 		{
 			GetWorldTimerManager().SetTimer(RoundTimerHandle, this, &ASSGameMode::EndRound, RoundTimeSeconds, false);
