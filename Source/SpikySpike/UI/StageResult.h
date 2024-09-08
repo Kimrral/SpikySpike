@@ -27,9 +27,6 @@ public:
 	void ReturnToLobby();
 
 	UPROPERTY(VisibleAnywhere, meta = (BindWidget))
-	class UButton* Btn_ReturnLobby;
-
-	UPROPERTY(VisibleAnywhere, meta = (BindWidget))
 	class UWidgetSwitcher* WidgetSwitcher_StageResult;
 	
 };
