@@ -86,5 +86,5 @@ public:
 	*/
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	float JumpImpulse = 300.f;
+	float JumpImpulse = 500.f;
 };
